@@ -9,8 +9,24 @@ import logging
 from typing import Any, Dict, List, Optional, Type
 
 from pydantic import BaseModel, create_model, ConfigDict
-from utcp.client.utcp_client import UtcpClient
-from utcp.shared.tool import Tool as UTCPTool
+
+# UTCP 1.0 import paths with fallbacks for older versions
+try:
+    from utcp.utcp_client import UtcpClient  # UTCP >= 1.0
+except Exception:  # pragma: no cover - fallback for UTCP < 1.0
+    try:
+        from utcp.client.utcp_client import UtcpClient  # legacy path
+    except Exception as _e:  # re-raise with context
+        raise ImportError("Could not import UtcpClient from UTCP. Ensure 'utcp' is installed.") from _e
+
+# Tool model location changed between versions; try multiple paths
+try:
+    from utcp.data.tool import Tool as UTCPTool  # UTCP >= 1.0
+except Exception:
+    try:
+        from utcp.shared.tool import Tool as UTCPTool  # legacy path
+    except Exception as _e:
+        raise ImportError("Could not import Tool model from UTCP.") from _e
 
 # Configure logger for this module
 logger = logging.getLogger(__name__)
