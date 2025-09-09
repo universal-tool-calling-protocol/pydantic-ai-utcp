@@ -7,7 +7,6 @@ This example demonstrates the simplified approach:
 """
 
 import asyncio
-import asyncio
 from utcp.utcp_client import UtcpClient
 from utcp.data.utcp_client_config import UtcpClientConfig
 from utcp_http.http_call_template import HttpCallTemplate
@@ -38,7 +37,7 @@ async def main():
                 "name": "httpbin",
                 "call_template_type": "http",
                 "http_method": "POST",
-                "url": "http://httpbin.org/anything",
+                "url": "https://httpbin.org/anything",
                 "content_type": "application/json"
             }
         ]
@@ -116,7 +115,7 @@ async def main():
     if book_tools:
         print(f"\n🎯 Tool info: {book_tools[0].name}")
         try:
-            print(f"Input schema: {book_tools[0].input_model.schema()}")
+            print(f"Input schema: {book_tools[0].input_model.model_json_schema()}")
             print("\n💡 Usage example:")
             print(f"    # To call this tool:")
             print(f"    # result = await {book_tools[0].name}(**arguments)")

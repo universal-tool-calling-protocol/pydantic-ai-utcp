@@ -126,10 +126,10 @@ async def main():
         print(f"\n📋 Example tool info for '{example_tool.name}':")
         print(f"  Description: {example_tool.description}")
         
-        # Try to get the schema if available
+        # Use adapter's get_input_schema(), which returns a JSON-serializable dict
         try:
             schema = example_tool.get_input_schema()
-            print(f"  Input schema: {schema.schema()}")
+            print(f"  Input schema: {schema}")
         except Exception as e:
             print(f"  Could not get input schema: {e}")
     

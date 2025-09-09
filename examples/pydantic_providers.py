@@ -27,8 +27,8 @@ async def main():
     # Create UTCP client with call templates
     print("[CREATE] Creating UTCP client...")
     
-    # Check if NewsAPI manual exists
-    newsapi_file = Path("newsapi_manual.json")
+    # Check if NewsAPI manual exists (resolve relative to this script directory)
+    newsapi_file = Path(__file__).parent / "newsapi_manual.json"
     call_templates = [
         HttpCallTemplate(
             name="openlibrary",
@@ -44,7 +44,7 @@ async def main():
             TextCallTemplate(
                 name="newsapi",
                 call_template_type="text",
-                file_path="./newsapi_manual.json"
+                file_path=str(newsapi_file)
             )
         )
         print("  [FOUND] Found NewsAPI manual, including in configuration")
@@ -125,7 +125,7 @@ async def main():
                     input_schema = {}
                     if hasattr(test_tool, 'get_input_schema'):
                         try:
-                            input_schema = test_tool.get_input_schema().schema()
+                            input_schema = test_tool.get_input_schema()
                             print(f"  [SCHEMA] Input schema: {input_schema}")
                         except Exception as e:
                             print(f"  [WARNING] Could not get input schema: {e}")

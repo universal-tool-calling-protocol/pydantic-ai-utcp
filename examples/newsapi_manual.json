@@ -1,5 +1,4 @@
 {
-    "version": "1.0",
     "tools": [
       {
         "name": "everything_get",
@@ -124,15 +123,16 @@
             }
           }
         },
-        "tool_provider": {
-          "provider_type": "http",
+        "tool_call_template": {
+          "call_template_type": "http",
           "url": "https://newsapi.org/v2/everything",
           "http_method": "GET",
           "content_type": "application/json",
           "auth": {
             "auth_type": "api_key",
             "api_key": "$NEWS_API_KEY",
-            "var_name": "X-Api-Key"
+            "var_name": "X-Api-Key",
+            "location": "header"
           }
         }
       },
@@ -236,15 +236,16 @@
             }
           }
         },
-        "tool_provider": {
-          "provider_type": "http",
+        "tool_call_template": {
+          "call_template_type": "http",
           "url": "https://newsapi.org/v2/top-headlines",
           "http_method": "GET",
           "content_type": "application/json",
           "auth": {
             "auth_type": "api_key",
             "api_key": "$NEWS_API_KEY",
-            "var_name": "X-Api-Key"
+            "var_name": "X-Api-Key",
+            "location": "header"
           }
         }
       }

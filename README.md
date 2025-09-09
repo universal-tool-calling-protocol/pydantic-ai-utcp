@@ -32,6 +32,13 @@ Key packages used by this project:
 - aiohttp
 - pytest and pytest-asyncio for tests
 
+## Compatibility
+
+- Pydantic: v2.x (tested with 2.11.x)
+- UTCP core: >= 1.0.4
+- UTCP HTTP: >= 1.0.4
+- UTCP Text: >= 1.0.2
+
 ## Project Layout
 
 - `pydantic_utcp_adapters/` – Package source (exports the adapter types and utilities)
@@ -100,13 +107,33 @@ All examples are async and may perform network operations. Ensure you have inter
 
 - Real providers (OpenLibrary + optional NewsAPI via manual text template):
   ```bash
-  # If running from project root:
   pdm run python examples/pydantic_providers.py
   ```
   This example tries to load `examples/newsapi_manual.json` if present. It requires `utcp-text`, which you can add with:
   ```bash
   pdm add utcp_text
   ```
+  Path handling is script-relative, so running from the project root works out of the box.
+  UTCP manual schema note: the current UTCP text manual format expects each tool to define a `tool_call_template` with a `call_template_type` field (for HTTP, SSE, etc.). For example:
+  ```json
+  {
+    "name": "everything_get",
+    "inputs": { "type": "object", "properties": { "q": { "type": "string" } }, "required": ["q"] },
+    "tool_call_template": {
+      "call_template_type": "http",
+      "url": "https://newsapi.org/v2/everything",
+      "http_method": "GET",
+      "content_type": "application/json",
+      "auth": {
+        "auth_type": "api_key",
+        "api_key": "$NEWS_API_KEY",
+        "var_name": "X-Api-Key",
+        "location": "header"
+      }
+    }
+  }
+  ```
+  Avoid the older `tool_provider`/`provider_type` keys; they will fail validation in newer UTCP versions.
 
 - Authentication patterns (API key, Basic, OAuth2):
   ```bash

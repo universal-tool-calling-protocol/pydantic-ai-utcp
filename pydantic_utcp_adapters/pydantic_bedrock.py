@@ -7,7 +7,7 @@ strict tool naming requirements when using Pydantic models.
 
 import uuid
 from typing import Dict, List, Any, Optional, Type, TypeVar, Generic
-from pydantic import BaseModel
+from pydantic import BaseModel, create_model
 
 T = TypeVar('T', bound=BaseModel)
 

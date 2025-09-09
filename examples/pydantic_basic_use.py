@@ -68,7 +68,7 @@ async def main():
     if tools:
         print(f"\n🔧 Example tool schema for '{tools[0].name}':")
         print(f"  Description: {tools[0].description}")
-        print(f"  Input schema: {tools[0].input_model.schema()}")
+        print(f"  Input schema: {tools[0].input_model.model_json_schema()}")
         
         # Show how the tool would be called
         print(f"\n💡 Usage example:")
