@@ -9,6 +9,7 @@ import logging
 from typing import Any, Dict, List, Optional, Type
 
 from pydantic import BaseModel, create_model, ConfigDict
+from utcp.data.tool import ToolSerializer
 
 # UTCP 1.0 import paths with fallbacks for older versions
 try:
@@ -155,16 +156,11 @@ class PydanticAITool:
         self.name = tool.name
         self.description = tool.description or f"UTCP tool: {tool.name}"
 
-        # Build input model from UTCP JsonSchema/Pydantic model
-        if hasattr(tool.inputs, "model_dump"):
-            schema_dict = tool.inputs.model_dump(by_alias=True, exclude_none=True)
-        elif hasattr(tool.inputs, "__dict__"):
-            schema_dict = tool.inputs.__dict__
-        elif isinstance(tool.inputs, dict):
-            schema_dict = tool.inputs
-        else:
-            schema_dict = {"type": "object", "properties": {}}
-
+        # Serialize the tool using ToolSerializer and get the inputs schema
+        tool_dict = ToolSerializer().to_dict(tool)
+        schema_dict = tool_dict.get('inputs', {"type": "object", "properties": {}})
+        
+        # Create input model from the serialized schema
         self.input_model = _create_pydantic_model_from_schema(
             schema_dict, f"{tool.name.replace('.', '_')}Input"
         )

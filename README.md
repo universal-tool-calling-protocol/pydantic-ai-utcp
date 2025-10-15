@@ -1,6 +1,6 @@
 # pydantic-utcp-adapters
 
-Adapters that bridge UTCP (Unified Tool Calling Protocol) tools into PydanticAI. This lets you discover tools (e.g., from OpenAPI specs or manual configs) via UTCP and use them as PydanticAI tools with minimal glue code.
+Adapters that bridge UTCP (Universal Tool Calling Protocol) tools into PydanticAI. This lets you discover tools (e.g., from OpenAPI specs or manual configs) via UTCP and use them as PydanticAI tools with minimal glue code.
 
 UTCP is a newly launched, modern alternative to MCP, aimed at standardized tool discovery, configuration, and invocation across protocols like HTTP, SSE, and text-based definitions.
 

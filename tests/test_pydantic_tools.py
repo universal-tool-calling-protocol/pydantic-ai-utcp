@@ -40,6 +40,17 @@ except Exception:  # pragma: no cover - fallback for environments without UTCP J
         outputs: object | dict | None = None
         tags: list[str] = field(default_factory=list)
         tool_call_template: object | None = None
+        
+        def model_dump(self, by_alias: bool = True, exclude_none: bool = True):
+            """Mimic Pydantic's model_dump method for testing."""
+            return {
+                'name': self.name,
+                'description': self.description,
+                'inputs': self.inputs.model_dump() if hasattr(self.inputs, 'model_dump') else self.inputs,
+                'outputs': self.outputs.model_dump() if hasattr(self.outputs, 'model_dump') else self.outputs,
+                'tags': self.tags,
+                'tool_call_template': self.tool_call_template
+            }
 
 try:  # pragma: no cover - environment-dependent
     from utcp_http.http_call_template import HttpCallTemplate  # type: ignore
