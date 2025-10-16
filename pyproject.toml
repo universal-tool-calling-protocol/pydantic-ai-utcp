@@ -1,6 +1,13 @@
 [project]
-name = "pydantic_utcp_adapters"
+name = "pydantic-ai-utcp"
 version = "0.1.0"
+description = "Make Universal Tool Calling Protocol (UTCP) tools compatible with Pydantic AI."
+authors = [
+  { name = "UTCP Contributors" },
+]
+license = "MIT"
+repository = "https://www.github.com/universal-tool-calling-protocol/pydantic-ai-utcp"
+readme = "README.md"
 dependencies = [
     "pydantic==2.11.7",
     "Authlib==1.6.1",
@@ -23,11 +30,23 @@ dependencies = [
 ]
 requires-python = ">=3.11"
 
+[project.optional-dependencies]
+dev = [
+    "build",
+    "twine",
+]
+
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
 [tool.pdm]
 packages = [
-  { include = "pydantic_utcp_adapters" }
+  { include = "pydantic-ai-utcp" }
 ]
+
+[project.urls]
+Homepage = "https://github.com/universal-tool-calling-protocol/pydantic-ai-utcp"
+Documentation = "https://github.com/universal-tool-calling-protocol/pydantic-ai-utcp#readme"
+Repository = "https://github.com/universal-tool-calling-protocol/pydantic-ai-utcp"
+Issues = "https://github.com/universal-tool-calling-protocol/pydantic-ai-utcp/issues"
